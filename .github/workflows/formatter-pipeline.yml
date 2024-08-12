@@ -1,0 +1,37 @@
+name: 🔄 Lint and Format Code
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  lint_and_format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v3
+
+    - name: 📦 Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'  # Usa la versión de Node.js que necesites
+
+    - name: 📚 Install Dependencies
+      run: npm install
+
+    - name: 🚨 Run ESLint
+      run: npm run lint
+
+    - name: 🧹 Format Code with Prettier
+      run: npm run format
+
+    - name: 🔍 Check for Uncommitted Changes
+      run: git diff --exit-code
+      shell: bash
